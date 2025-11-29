@@ -144,9 +144,11 @@ function setupReadlist(){
       const books = ids.map(id=> BOOKS.find(b=>b.id===id)).filter(Boolean);
       books.forEach(b=>{
         const card = createCard(b, {
-            label: 'Add to Bookshelf',
+            label: 'Buy Now',
             onClick: (book)=>{
-                storage.pushUnique('bookshelf', book.id);
+                localStorage.setItem('selectedBook', JSON.stringify(book));
+                localStorage.setItem("fromReadList", "true");
+                window.location.href = 'payment.html';
                 storage.remove('readlist', book.id);
                 render();
             }
@@ -182,47 +184,53 @@ function setupBookshelf(){
 }
   
 // Load selected book from previous page
-const book = JSON.parse(localStorage.getItem("selectedBook"));
-if (book) {
-    document.getElementById("payCover").src = book.cover;
-    document.getElementById("payTitle").textContent = book.title;
-    document.getElementById("payAuthor").textContent = book.author;
-    document.getElementById("payGenre").textContent = book.genre;
-    document.getElementById("payPages").textContent = book.pages;
-    document.getElementById("payYear").textContent = "Published " + book.year;
+function loadSelectedBook() {
+    if (localStorage.getItem("fromReadList") === "true") {
+        const book = JSON.parse(localStorage.getItem("selectedBook"));
+        if (book) {
+            document.getElementById("payCover").src = book.cover;
+            document.getElementById("payTitle").textContent = book.title;
+            document.getElementById("payAuthor").textContent = book.author;
+            document.getElementById("payGenre").textContent = book.genre;
+            document.getElementById("payPages").textContent = book.pages;
+            document.getElementById("payYear").textContent = "Published " + book.year;
 
-    const subtotal = book.price;
-    const tax = +(subtotal * 0.10).toFixed(2);
-    const total = +(subtotal + tax).toFixed(2);
+            const subtotal = book.price;
+            const tax = +(subtotal * 0.10).toFixed(2);
+            const total = +(subtotal + tax).toFixed(2);
 
-    document.getElementById("subtotal").textContent = "$" + subtotal;
-    document.getElementById("tax").textContent = "$" + tax;
-    document.getElementById("total").textContent = "$" + total;
+            document.getElementById("subtotal").textContent = "$" + subtotal;
+            document.getElementById("tax").textContent = "$" + tax;
+            document.getElementById("total").textContent = "$" + total;
+        }
+
+        // On purchase → add to bookshelf
+        document.getElementById("completePurchase").onclick = () => {
+            const shelf = JSON.parse(localStorage.getItem("bookshelf")) || [];
+            shelf.push(book);
+            localStorage.setItem("bookshelf", JSON.stringify(shelf));
+            window.location.href = "bookshelf.html";
+        };
+    }
 }
 
-// On purchase → add to bookshelf
-document.getElementById("completePurchase").onclick = () => {
-    const shelf = JSON.parse(localStorage.getItem("bookshelf")) || [];
-    shelf.push(book);
-    localStorage.setItem("bookshelf", JSON.stringify(shelf));
-    window.location.href = "bookshelf.html";
-};
+function setupLogin() {
+    const loginTab = document.getElementById("loginTab");
+    const signupTab = document.getElementById("signupTab");
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
 
-const loginTab = document.getElementById("loginTab");
-const signupTab = document.getElementById("signupTab");
-const loginForm = document.getElementById("loginForm");
-const signupForm = document.getElementById("signupForm");
+    loginTab.onclick = () => {
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+        loginForm.classList.add("active");
+        signupForm.classList.remove("active");
+    };
 
-loginTab.onclick = () => {
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
-    loginForm.classList.add("active");
-    signupForm.classList.remove("active");
-};
-
-signupTab.onclick = () => {
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
-    signupForm.classList.add("active");
-    loginForm.classList.remove("active");
-};
+    signupTab.onclick = () => {
+        signupTab.classList.add("active");
+        loginTab.classList.remove("active");
+        signupForm.classList.add("active");
+        loginForm.classList.remove("active");
+    };
+}

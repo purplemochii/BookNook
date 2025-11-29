@@ -54,7 +54,9 @@ function createCard(book, opts={}){
     return el;
 }
   
-function escapeHtml(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') }
+function escapeHtml(s){ 
+    return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') 
+}
   
   // page-specific setups
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -76,13 +78,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
         setupReadlist();
     }   else if(page==='bookshelf' || path==='bookshelf.html'){
         setupBookshelf();
+    }   else if(page==='login' || path==='login.html'){
+        setupLogin();
+    }   else if(page==='payment' || path==='payment.html'){
+        setupPayment();
     }
 });
   
   /* INDEX */
 function setupIndex(){
-    const heroBtn = document.querySelector('.btn[href="browse.html"], .browse-button');
-    // nothing fancy — if button exists, link works naturally
+   //nothing to see here...*tumbleweed*
 }
   
   /* BROWSE */
@@ -148,9 +153,7 @@ function setupReadlist(){
             onClick: (book)=>{
                 localStorage.setItem('selectedBook', JSON.stringify(book));
                 localStorage.setItem("fromReadList", "true");
-                window.location.href = 'payment.html';
-                storage.remove('readlist', book.id);
-                render();
+                window.location.href = 'payment.html';                
             }
         });
         grid.appendChild(card);
@@ -176,7 +179,7 @@ function setupBookshelf(){
     books.forEach(b=>{
         const card = createCard(b, {
             label: 'Owned',
-            onClick: ()=>{ alert('Already in bookshelf') }
+            onClick: ()=>{}
         });
         grid.appendChild(card);
     });
@@ -184,35 +187,36 @@ function setupBookshelf(){
 }
   
 // Load selected book from previous page
-function loadSelectedBook() {
-    if (localStorage.getItem("fromReadList") === "true") {
-        const book = JSON.parse(localStorage.getItem("selectedBook"));
-        if (book) {
-            document.getElementById("payCover").src = book.cover;
-            document.getElementById("payTitle").textContent = book.title;
-            document.getElementById("payAuthor").textContent = book.author;
-            document.getElementById("payGenre").textContent = book.genre;
-            document.getElementById("payPages").textContent = book.pages;
-            document.getElementById("payYear").textContent = "Published " + book.year;
+function setupPayment() {
+    const book = JSON.parse(localStorage.getItem("selectedBook"));
+    if (book) {
+        document.getElementById("payCover").src = book.img;
+        document.getElementById("payTitle").textContent = book.title;
+        document.getElementById("payAuthor").textContent = book.author;
+        document.getElementById("payGenre").textContent = book.genre;
+        document.getElementById("payPages").textContent = book.pages;
+        document.getElementById("payYear").textContent = "Published " + book.year;
 
-            const subtotal = book.price;
-            const tax = +(subtotal * 0.10).toFixed(2);
-            const total = +(subtotal + tax).toFixed(2);
+        const subtotal = book.price;
+        const tax = +(subtotal * 0.10).toFixed(2);
+        const total = +(subtotal + tax).toFixed(2);
 
-            document.getElementById("subtotal").textContent = "$" + subtotal;
-            document.getElementById("tax").textContent = "$" + tax;
-            document.getElementById("total").textContent = "$" + total;
-        }
+        document.getElementById("subtotal").textContent = "$" + subtotal;
+        document.getElementById("tax").textContent = "$" + tax;
+        document.getElementById("total").textContent = "$" + total;
+    }
 
         // On purchase → add to bookshelf
-        document.getElementById("completePurchase").onclick = () => {
-            const shelf = JSON.parse(localStorage.getItem("bookshelf")) || [];
-            shelf.push(book);
-            localStorage.setItem("bookshelf", JSON.stringify(shelf));
-            window.location.href = "bookshelf.html";
-        };
+    document.getElementById("completePurchase").onclick = () => {
+        storage.pushUnique('bookshelf', book.id);
+        window.location.href = "bookshelf.html";
     }
+
+    localStorage.removeItem("fromReadList");
+    localStorage.removeItem("selectedBook");
+
 }
+
 
 function setupLogin() {
     const loginTab = document.getElementById("loginTab");
@@ -225,12 +229,29 @@ function setupLogin() {
         signupTab.classList.remove("active");
         loginForm.classList.add("active");
         signupForm.classList.remove("active");
-    };
+    }
 
     signupTab.onclick = () => {
         signupTab.classList.add("active");
         loginTab.classList.remove("active");
         signupForm.classList.add("active");
         loginForm.classList.remove("active");
-    };
+    }
+
+    const loginSubmit = document.getElementById("auth-submit-login");
+    if (loginSubmit) {
+        //pretend the login details are valid lol
+        loginSubmit.onclick = () => {
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = 'index.html';
+        }
+    }
+
+    const signupSubmit = document.getElementById("auth-submit-signup");
+    if (signupSubmit) {
+        signupSubmit.onclick = () => {
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = 'index.html';
+        }
+    }
 }

@@ -8,61 +8,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
-<body class="payment-body">
+<body class="payment" data-page="payment">
+    <div class="payment-body">
+        <a href="browse.html" class="payment-back">← Back to Library</a>
 
-    <a href="browse.html" class="payment-back">← Back to Store</a>
+        <div class="payment-container">
 
-    <div class="payment-container">
+            <!-- ORDER SUMMARY -->
+            <div class="summary-box">
+                <h2>Order Summary</h2>
 
-        <!-- ORDER SUMMARY -->
-        <div class="summary-box">
-            <h2>Order Summary</h2>
+                <div class="summary-book">
+                    <img id="payCover" src="" alt="Book cover">
 
-            <div class="summary-book">
-                <img id="payCover" src="" alt="Book cover">
-
-                <div>
-                    <h3 id="payTitle">Book Title</h3>
-                    <p id="payAuthor"></p>
-                    <p class="summary-meta"><span id="payGenre"></span> • <span id="payPages"></span> pages</p>
-                    <p class="summary-year" id="payYear"></p>
+                    <div>
+                        <h3 id="payTitle">Book Title</h3>
+                        <p id="payAuthor"></p>
+                        <p class="summary-meta"><span id="payGenre"></span> • <span id="payPages"></span> pages</p>
+                        <p class="summary-year" id="payYear"></p>
+                    </div>
                 </div>
+
+                <div class="summary-totals">
+                    <p>Subtotal <span id="subtotal">$0.00</span></p>
+                    <p>Tax <span id="tax">$0.00</span></p>
+                    <p class="total">Total <span id="total">$0.00</span></p>
+                </div>
+
+                <p class="payment-note">After purchase, this book will be added to your Bookshelf instantly.</p>
             </div>
 
-            <div class="summary-totals">
-                <p>Subtotal <span id="subtotal">$0.00</span></p>
-                <p>Tax <span id="tax">$0.00</span></p>
-                <p class="total">Total <span id="total">$0.00</span></p>
+            <!-- PAYMENT FORM -->
+            <div class="payment-box">
+                <h2>Payment Information</h2>
+
+                <label>Cardholder Name</label>
+                <input type="text" placeholder="Full Name">
+
+                <label>Card Number</label>
+                <input type="number" placeholder="1234 5678 9012 3456">
+
+                <div class="payment-row">
+                    <div>
+                        <label>Expiry Date</label>
+                        <input type="date" placeholder="MM/YY">
+                    </div>
+                    <div>
+                        <label>CVV</label>
+                        <input type="number" placeholder="123">
+                    </div>
+                </div>
+
+                <button class="pay-btn" id="completePurchase">Complete Purchase</button>
+                <p class="test-note">This is a demo form. No money will be charged.</p>
             </div>
 
-            <p class="payment-note">After purchase, this book will be added to your Bookshelf instantly.</p>
         </div>
-
-        <!-- PAYMENT FORM -->
-        <div class="payment-box">
-            <h2>Payment Information</h2>
-
-            <label>Cardholder Name</label>
-            <input type="text" placeholder="John Doe">
-
-            <label>Card Number</label>
-            <input type="text" placeholder="1234 5678 9012 3456">
-
-            <div class="payment-row">
-                <div>
-                    <label>Expiry Date</label>
-                    <input type="text" placeholder="MM/YY">
-                </div>
-                <div>
-                    <label>CVV</label>
-                    <input type="text" placeholder="123">
-                </div>
-            </div>
-
-            <button class="pay-btn" id="completePurchase">Complete Purchase</button>
-            <p class="test-note">This is a demo form. No money will be charged.</p>
-        </div>
-
     </div>
 
 <script src="app.js"></script>

@@ -8,48 +8,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
-<body class="auth-body">
+<body class="login" data-page="login">
+    <div class="auth-body">
+        <h1 class="auth-title">THE BOOK NOOK</h1>
+        <p class="auth-subtitle">Your personal digital library</p>
 
-    <h1 class="auth-title">THE BOOK NOOK</h1>
-    <p class="auth-subtitle">Your personal digital library</p>
+        <div class="auth-container">
 
-    <div class="auth-container">
+            <!-- Toggle Buttons -->
+            <div class="auth-toggle">
+                <button class="auth-tab active" id="loginTab">Login</button>
+                <button class="auth-tab" id="signupTab">Sign Up</button>
+            </div>
 
-        <!-- Toggle Buttons -->
-        <div class="auth-toggle">
-            <button class="auth-tab active" id="loginTab">Login</button>
-            <button class="auth-tab" id="signupTab">Sign Up</button>
+            <!-- LOGIN FORM -->
+            <form id="loginForm" class="auth-form active">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email">
+
+                <label>Password</label>
+                <input type="password" placeholder="Enter your password">
+
+                <button class="auth-submit-login">Login</button>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form id="signupForm" class="auth-form">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email">
+
+                <label>Password</label>
+                <input type="password" placeholder="Create a password">
+
+                <label>Confirm Password</label>
+                <input type="password" placeholder="Re-enter your password">
+
+                <button class="auth-submit-signup">Sign Up</button>
+            </form>
+
+            <a href="index.html" class="auth-back">← Back to Home</a>
+
         </div>
-
-        <!-- LOGIN FORM -->
-        <form id="loginForm" class="auth-form active">
-            <label>Email</label>
-            <input type="email" placeholder="Enter your email">
-
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password">
-
-            <button class="auth-submit">Login</button>
-        </form>
-
-        <!-- SIGNUP FORM -->
-        <form id="signupForm" class="auth-form">
-            <label>Email</label>
-            <input type="email" placeholder="Enter your email">
-
-            <label>Password</label>
-            <input type="password" placeholder="Create a password">
-
-            <label>Confirm Password</label>
-            <input type="password" placeholder="Re-enter your password">
-
-            <button class="auth-submit">Sign Up</button>
-        </form>
-
-        <a href="index.html" class="auth-back">← Back to Home</a>
-
     </div>
-
 <script src="app.js"></script>
 </body>
 </html>

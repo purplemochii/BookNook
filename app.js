@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         setupReadlist();
     }   else if(page==='bookshelf' || path==='bookshelf.html'){
         setupBookshelf();
-    }   else if(page==='login' || path==='login.html'){
+    }   else if(page==='index' || path==='index.html'){
         setupLogin();
     }   else if(page==='payment' || path==='payment.html'){
         setupPayment();

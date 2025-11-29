@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Readlist - The Book Nook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="readlist" data-page="readlist">
+  <header class="nav">
+    <div class="nav__inner container">
+      <a class="brand" href="index.html">THE BOOK NOOK</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="browse.html">Browse</a>
+        <a href="readlist.html" class="active">Readlist</a>
+        <a href="bookshelf.html">Bookshelf</a>
+      </nav>
+      <div class="profile-dot"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:22px">📘</span>
+        <h1 style="font-size:22px;font-weight:600">My Read List</h1>
+      </div>
+      <p id="book-count" class="kv" style="margin-top:8px">0 books total</p>
+    </section>
+
+    <section>
+      <div id="booksGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

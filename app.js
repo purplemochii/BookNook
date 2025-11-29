@@ -1,4 +1,5 @@
 //app.js has all js functions, whether they work or not. hopefully they all work like theyre supposed to💀🙏🏾
+//i rly tried my best to not basically use a js framework but lookie what happened in the end lol
 
 //sample books
 const BOOKS = [
@@ -85,12 +86,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 });
   
-  /* INDEX */
+/*home page*/
 function setupIndex(){
    //nothing to see here...*tumbleweed*
 }
   
-  /* BROWSE */
+/*browse page*/
 function setupBrowse(){
     const grid = document.getElementById('booksGrid');
     const search = document.getElementById('searchInput');
@@ -133,7 +134,7 @@ function setupBrowse(){
     if(author) author.addEventListener('change', applyFilters);
 }
   
-  /* READLIST */
+/*readlist page*/
 function setupReadlist(){
     const grid = document.getElementById('booksGrid');
     const countEl = document.getElementById('book-count');
@@ -163,7 +164,7 @@ function setupReadlist(){
     render();
 }
   
-  /* BOOKSHELF */
+/*bookshelf page*/
 function setupBookshelf(){
     const grid = document.getElementById('bookshelf-container') || document.getElementById('booksGrid');
     const countEl = document.getElementById('book-count');
@@ -186,7 +187,7 @@ function setupBookshelf(){
     if(countEl) countEl.textContent = `${books.length} books total`;
 }
   
-// Load selected book from previous page
+/*payment page*/
 function setupPayment() {
     const book = JSON.parse(localStorage.getItem("selectedBook"));
     if (book) {
@@ -218,6 +219,7 @@ function setupPayment() {
 }
 
 
+/*login and signup page*/
 function setupLogin() {
     const loginTab = document.getElementById("loginTab");
     const signupTab = document.getElementById("signupTab");
@@ -241,17 +243,19 @@ function setupLogin() {
     const loginSubmit = document.getElementById("auth-submit-login");
     if (loginSubmit) {
         //pretend the login details are valid lol
-        loginSubmit.onclick = () => {
+        loginSubmit.onclick = (e) => {
+            e.preventDefault();
             localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = 'index.html';
-        }
+            window.location.href = 'home.html';
+        };
     }
 
     const signupSubmit = document.getElementById("auth-submit-signup");
     if (signupSubmit) {
-        signupSubmit.onclick = () => {
+        signupSubmit.onclick = (e) => {
+            e.preventDefault();
             localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = 'index.html';
-        }
+            window.location.href = 'home.html';
+        };
     }
 }

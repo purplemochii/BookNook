@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Book Nook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="index" data-page="index">
+    <header class="nav-bar">
+        <div class="nav-bar-content">
+            <div class="brand">
+                <a href="home.html">THE BOOK NOOK</a>
+            </div>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="home.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="readlist.html">Readlist</a>
+                <a href="bookshelf.html">Bookshelf</a>
+                <div class="profile-dot"></div>
+            </nav>
+            
+            <div class="compressed-menu" id="compressedMenu">
+                ☰
+            </div>
+        </div>
+    </header>
+
+
+  <main class="container">
+    <section class="hero">
+      <h1>Welcome to The Book Nook</h1>
+      <p>Your personal digital library. Discover, organize, and track your reading journey.</p>
+      <a class="btn" href="browse.html">Browse Books</a>
+    </section>
+
+    <section class="container">
+      <div class="section-header">
+        <h3 class="featured-title">Featured Books</h3>
+        <a class="btn ghost" href="browse.html">View All</a>
+      </div>
+
+      <div id="homeGrid" class="grid">
+        <!-- render a few featured cards client-side -->
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    // small home render
+    document.addEventListener('DOMContentLoaded', ()=> {
+      const featured = document.getElementById('homeGrid');
+      const picks = [BOOKS[0], BOOKS[4], BOOKS[7], BOOKS[9]];
+      picks.forEach(b=>{
+        featured.appendChild(createCard(b, { label:'Add to Readlist', onClick: (bk)=>{ storage.pushUnique('readlist', bk.id); alert(`Added ${bk.title}`) } }))
+      })
+    });
+
+    document.getElementById('compressedMenu').addEventListener('click', ()=>{
+      document.getElementById('navLinks').classList.toggle('show');
+    });
+  </script>
+</body>
+</html>

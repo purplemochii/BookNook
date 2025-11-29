@@ -1,67 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Book Nook</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – The Book Nook</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body id="index" data-page="index">
-    <header class="nav-bar">
-        <div class="nav-bar-content">
-            <div class="brand">
-                <a href="index.html">THE BOOK NOOK</a>
+
+<body class="login" data-page="login">
+    <div class="auth-body">
+        <h1 class="auth-title">THE BOOK NOOK</h1>
+        <p class="auth-subtitle">Your personal digital library</p>
+
+        <div class="auth-container">
+
+            <!-- Toggle Buttons -->
+            <div class="auth-toggle">
+                <button class="auth-tab active" id="loginTab">Login</button>
+                <button class="auth-tab" id="signupTab">Sign Up</button>
             </div>
 
-            <nav class="nav-links" id="navLinks">
-                <a href="index.html">Home</a>
-                <a href="browse.html">Browse</a>
-                <a href="readlist.html">Readlist</a>
-                <a href="bookshelf.html">Bookshelf</a>
-                <div class="profile-dot"></div>
-            </nav>
-            
-            <div class="compressed-menu" id="compressedMenu">
-                ☰
-            </div>
+            <!-- LOGIN FORM -->
+            <form id="loginForm" class="auth-form active">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email">
+
+                <label>Password</label>
+                <input type="password" placeholder="Enter your password">
+
+                <button id="auth-submit-login" class="auth-submit-login">Login</button>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form id="signupForm" class="auth-form">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email">
+
+                <label>Password</label>
+                <input type="password" placeholder="Create a password">
+
+                <label>Confirm Password</label>
+                <input type="password" placeholder="Re-enter your password">
+
+                <button id="auth-submit-signup" class="auth-submit-signup">Sign Up</button>
+            </form>
+
+            <a href="index.html" class="auth-back">← Back to Home</a>
+
         </div>
-    </header>
-
-
-  <main class="container">
-    <section class="hero">
-      <h1>Welcome to The Book Nook</h1>
-      <p>Your personal digital library. Discover, organize, and track your reading journey.</p>
-      <a class="btn" href="browse.html">Browse Books</a>
-    </section>
-
-    <section class="container">
-      <div class="section-header">
-        <h3 class="featured-title">Featured Books</h3>
-        <a class="btn ghost" href="browse.html">View All</a>
-      </div>
-
-      <div id="homeGrid" class="grid">
-        <!-- render a few featured cards client-side -->
-      </div>
-    </section>
-  </main>
-
-  <script src="app.js"></script>
-  <script>
-    // small home render
-    document.addEventListener('DOMContentLoaded', ()=> {
-      const featured = document.getElementById('homeGrid');
-      const picks = [BOOKS[0], BOOKS[4], BOOKS[7], BOOKS[9]];
-      picks.forEach(b=>{
-        featured.appendChild(createCard(b, { label:'Add to Readlist', onClick: (bk)=>{ storage.pushUnique('readlist', bk.id); alert(`Added ${bk.title}`) } }))
-      })
-    });
-
-    document.getElementById('compressedMenu').addEventListener('click', ()=>{
-      document.getElementById('navLinks').classList.toggle('show');
-    });
-  </script>
+    </div>
+<script src="app.js"></script>
 </body>
 </html>

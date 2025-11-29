@@ -3,9 +3,11 @@
     margin:0;
     padding:0;
 }
+
 html,body{
     height:100%;
 }
+
 body{
     font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     background:#eefaff;
@@ -15,14 +17,14 @@ body{
     line-height:1.45;
 }
     
-    /* layout container */
+/*layou*/
 .container{
     max-width:1280px;
     margin:0 auto;
     padding:0 28px 60px;
 }
     
-    /* NAVBAR - unified */
+/*navbar*/
 .nav-bar{
     width: 100%;
     position:sticky;
@@ -38,7 +40,8 @@ body{
     justify-content: space-between;
     align-items: center;
 }
-    
+
+/*brand logo yes we have a logo*/
 .brand a{
     font-weight:400;
     font-size:40px;
@@ -71,11 +74,13 @@ body{
     box-shadow:0 6px 18px rgba(0,0,0,0.08);
 }
 
+/*im not figuring out how to put an avatar in there lol*/
 .profile-dot{
     width:44px;height:44px;border-radius:50%;
     background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.08));
 }
-    
+
+/*apparently these are called hamburgers??*/
 .compressed-menu{
     display:none;
     font-size:28px;
@@ -110,7 +115,7 @@ body{
     }
 }
   
-  /* hero / title */
+/*hero*/
 .hero{
     padding:48px 0 24px;
     text-align:center;
@@ -156,7 +161,7 @@ body{
     border:2px solid rgba(0,0,0,0.06);
 }
     
-    /* section header used across pages */
+/*section*/
 .section-header{
     display:flex;
     align-items:center;
@@ -173,7 +178,7 @@ body{
     letter-spacing: 0.2px;
 }
     
-    /* search + filters */
+/*search box*/
 .search-wrap{
     background:#ffffff;
     padding:18px;
@@ -217,7 +222,7 @@ body{
     border:none;
 }
     
-    /* cards grid shared */
+/*card grid*/
 .grid{
     display:grid;
     grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
@@ -225,7 +230,7 @@ body{
     margin-top:12px;
 }
     
-    /* book card */
+/*book card*/
 .card{
     background:#ffffff;
     border-radius:14px;
@@ -254,10 +259,9 @@ body{
     display:flex;
     flex-direction:column; 
     gap:8px; 
-    /* flex:1; */
 }
     
-    /* titles, meta */
+/*titles*/
 .title{ 
     font-size:20px; 
     font-family: 'Inter', sans-serif, regular;
@@ -288,7 +292,7 @@ body{
     color:#222 
 }
     
-    /* action button at bottom */
+/* action button at bottom */
 .action{
     margin-top:auto;
     width:100%;
@@ -305,15 +309,15 @@ body{
     cursor:pointer;
 }
     
-    /* empty state */
+/* empty state */
 .empty{
     padding:40px;
     text-align:center;
     color:#000000b0;
 }
 
-/* ------------ LOGIN / SIGNUP PAGE ------------ */
 
+/*login and signup page*/
 .auth-body {
     background: #e9f7ff;
     font-family: Inter, sans-serif;
@@ -421,8 +425,8 @@ body{
     text-decoration: none;
 }
 
-/* ------------ PAYMENT PAGE ------------ */
 
+/*payment page*/
 .payment-body {
     background: #eefaff;
     font-family: Inter, sans-serif;
@@ -525,13 +529,13 @@ body{
     color: rgba(0,0,0,0.5);
 }
 
-    /* small helpers */
+/* small helpers */
 .kv{ 
     font-size:13px; 
     color:#000000b0 
 }
     
-    /* responsive tweaks */
+/* responsive tweaks bc the website needs to be resonsive and im tweakin*/
 @media (max-width:900px){
     .hero h1{font-size:32px}
     .nav__inner{

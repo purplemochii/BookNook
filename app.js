@@ -71,17 +71,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
         } else a.classList.remove('active');
     });
   
-    if(page==='home' || path==='home.html' || path===''){
+    if(page==='home' || path==='home.html'){
         setupIndex();
-    }   else if(page==='browse' || path==='browse.html'){
+    } else if(page==='browse' || path==='browse.html'){
         setupBrowse();
-    }   else if(page==='readlist' || path==='readlist.html'){
+    } else if(page==='readlist' || path==='readlist.html'){
         setupReadlist();
-    }   else if(page==='bookshelf' || path==='bookshelf.html'){
+    } else if(page==='bookshelf' || path==='bookshelf.html'){
         setupBookshelf();
-    }   else if(page==='index' || path==='index.html'){
-        setupLogin();
-    }   else if(page==='payment' || path==='payment.html'){
+    } else if(page==='index' || path==='index.html' || path===''){
+        setupLogin(); 
+    } else if(page==='payment' || path==='payment.html'){
         setupPayment();
     }
 });
@@ -221,6 +221,8 @@ function setupPayment() {
 
 /*login and signup page*/
 function setupLogin() {
+    debugger;
+    console.log("WORK PLEASE");
     const loginTab = document.getElementById("loginTab");
     const signupTab = document.getElementById("signupTab");
     const loginForm = document.getElementById("loginForm");

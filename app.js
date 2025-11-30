@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         } else a.classList.remove('active');
     });
   
-    if(page==='index' || path==='index.html' || path===''){
+    if(page==='home' || path==='home.html' || path===''){
         setupIndex();
     }   else if(page==='browse' || path==='browse.html'){
         setupBrowse();

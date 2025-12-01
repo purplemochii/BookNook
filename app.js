@@ -52,7 +52,7 @@ function setupBrowse() {
         el.dataset.id = book.book_id;
 
         el.innerHTML = `
-            <img class="card__cover" src="images/book${book.book_id}.jpg" alt="">
+            <img class="card__cover" src="${book.img}" alt="">
             <div class="card__body">
                 <div>
                     <div class="title">${book.title}</div>
@@ -130,7 +130,7 @@ function setupReadlist() {
             card.className = 'card';
 
             card.innerHTML = `
-                <img class="card__cover" src="images/book${book.book_id}.jpg" alt="">
+                <img class="card__cover" src="${book.img}" alt="">
                 <div class="card__body">
                     <div class="title">${book.title}</div>
                     <div class="author">${book.authors}</div>
@@ -174,7 +174,7 @@ function setupBookshelf() {
             card.className = 'card';
 
             card.innerHTML = `
-                <img class="card__cover" src="images/book${book.book_id}.jpg" alt="">
+                <img class="card__cover" src="${book.img}" alt="">
                 <div class="card__body">
                     <div class="title">${book.title}</div>
                     <div class="author">${book.authors}</div>
@@ -204,7 +204,7 @@ function setupPayment() {
     }
 
     function fillUI(book) {
-        document.getElementById("payCover").src = `images/book${book.book_id}.jpg`;
+        document.getElementById("payCover").src = "${book.img}";
         document.getElementById("payTitle").textContent = book.title;
         document.getElementById("payAuthor").textContent = book.authors;
         document.getElementById("payGenre").textContent = book.genre_name;

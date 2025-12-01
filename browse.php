@@ -24,6 +24,7 @@ while ($row = $result->fetch_assoc()) {
         'year' => (int)$row['year'],
         'price' => (float)$row['price'],
         'blurb' => $row['blurb'],
+        'img' => $row['img'],
     ];
 }
 

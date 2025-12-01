@@ -16,3 +16,4 @@ if ($user_id && $book_id) {
 header('Content-Type: application/json');
 echo json_encode($response);
 $conn->close();
+?>

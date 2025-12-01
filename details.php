@@ -4,7 +4,8 @@ include 'db_connect.php';
 $book_id = intval($_GET['id'] ?? 0);
 
 $sql = "SELECT b.book_id, b.title, b.price, b.blurb, g.genre_name,
-               GROUP_CONCAT(a.author_name SEPARATOR ', ') AS authors
+               b.img,
+               GROUP_CONCAT(a.author_name SEPARATOR ', ') AS authors,
         FROM Books b
         LEFT JOIN Genres g ON b.genre_id = g.genre_id
         LEFT JOIN Book_Authors ba ON b.book_id = ba.book_id
@@ -21,3 +22,4 @@ $book = $result->fetch_assoc();
 header('Content-Type: application/json');
 echo json_encode($book);
 $conn->close();
+?>

@@ -8,7 +8,7 @@ $sql = "SELECT b.book_id, b.title, g.genre_name
         FROM User_Library ul
         JOIN Books b ON ul.book_id = b.book_id
         LEFT JOIN Genres g ON b.genre_id = g.genre_id
-        WHERE ul.user_id = ? AND ul.status = 'To Read'";
+        WHERE ul.user_id = ? AND ul.book_status = 'To Read'";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();

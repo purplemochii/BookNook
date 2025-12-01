@@ -22,28 +22,31 @@
             </div>
 
             <!-- LOGIN FORM -->
-            <form id="loginForm" class="auth-form active">
+            <form action="login.php" method="POST" id="loginForm" class="auth-form active">
                 <label>Email</label>
-                <input type="email" placeholder="Enter your email">
+                <input type="email" placeholder="Enter your email" name="email">
 
                 <label>Password</label>
-                <input type="password" placeholder="Enter your password">
+                <input type="password" placeholder="Enter your password" name="password">
 
-                <button id="auth-submit-login" class="auth-submit-login">Login</button>
+                <button type="submit" class="auth-submit-login">Login</button>
             </form>
 
             <!-- SIGNUP FORM -->
-            <form id="signupForm" class="auth-form">
+            <form action="sign-up.php" method="POST" id="signupForm" class="auth-form">
+                <label>Username</label>
+                <input type="text" placeholder="Enter your username" name="username">
+
                 <label>Email</label>
-                <input type="email" placeholder="Enter your email">
+                <input type="email" placeholder="Enter your email" name="email">
 
                 <label>Password</label>
-                <input type="password" placeholder="Create a password">
+                <input type="password" placeholder="Create a password" name="password">
 
                 <label>Confirm Password</label>
-                <input type="password" placeholder="Re-enter your password">
+                <input type="password" placeholder="Re-enter your password" name="confirm_password">
 
-                <button id="auth-submit-signup" class="auth-submit-signup">Sign Up</button>
+                <button type="submit" class="auth-submit-signup">Sign Up</button>
             </form>
 
             <a href="home.html" class="auth-back">← Back to Home</a>

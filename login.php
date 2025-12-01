@@ -17,17 +17,12 @@
             $_SESSION["user_id"] = $row["user_id"];
             $_SESSION["username"] = $row["username"];
 
-            "success" => true, 
-            "message" => "Login successful"
-            "user_id" => $row["user_id"],
-            "username" => $row["username"]
-            header("Location: home.html")
+            //go to home page
+            echo "Login successful";
+            header("Location: home.html");
             exit();
         } else {
-            echo json_encode([
-                "success" => false, 
-                "message" => "Invalid email or password"
-            ]);
+            echo "Invalid email or password";
         }
     }
     $conn -> close();

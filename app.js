@@ -68,13 +68,14 @@ function setupBrowse() {
 
         // add-to-readlist button
         el.querySelector(".action").onclick = async () => {
-            await fetch('/BookNook/browse.php', {
+            await fetch('/BookNook/add-to-readlist.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ book_id: book.book_id }),
             });
             alert(`Added "${book.title}" to your Readlist!`);
         };
+        
 
         return el;
     }

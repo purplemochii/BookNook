@@ -163,18 +163,21 @@ async function setupReadlist(){
   
 /*bookshelf page*/
 async function setupBookshelf(){
-    await fetchBooks();
     const grid = document.getElementById('bookshelf-container') || document.getElementById('booksGrid');
     const countEl = document.getElementById('book-count');
   
     grid.innerHTML = '';
-    const ids = storage.get('bookshelf');
-    if(!ids.length){
+
+    // fetch user's owned books from db
+    const response = await fetch('bookshelf.php');
+    const books = await response.json(); 
+
+    if(!books.length){
         grid.innerHTML = '<div class="empty">Your bookshelf is empty — add books from Readlist.</div>';
         if(countEl) countEl.textContent = '0 books total';
         return;
     }
-    const books = ids.map(id=> BOOKS.find(b=>b.id===id)).filter(Boolean);
+
     books.forEach(b=>{
         const card = createCard(b, {
             label: 'Owned',
@@ -186,7 +189,7 @@ async function setupBookshelf(){
 }
   
 /*payment page*/
-function setupPayment() {
+async function setupPayment() {
     const book = JSON.parse(localStorage.getItem("selectedBook"));
     if (book) {
         document.getElementById("payCover").src = book.img;
@@ -205,10 +208,30 @@ function setupPayment() {
         document.getElementById("total").textContent = "$" + total;
     }
 
-        // On purchase → add to bookshelf
-    document.getElementById("completePurchase").onclick = () => {
-        storage.pushUnique('bookshelf', book.id);
-        window.location.href = "bookshelf.html";
+        // On purchase, add to bookshelf
+    document.getElementById("completePurchase").onclick = async () => {
+        if(book){
+
+            // take js form data
+            const formData = new URLSearchParams();
+            formData.append('book_id', book.id);
+
+            const updateResponse = await fetch('payment.php',{
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await updateResponse.json();
+
+            if(result.success){
+                window.location.href = "bookshelf.html";
+            }else{
+                alert("Purchase failed: " + result.message);
+            }
+        }else{
+            // if book didn't load, redirect anyways
+            window.location.href = "bookshelf.html";
+        }
     }
 
     localStorage.removeItem("fromReadList");

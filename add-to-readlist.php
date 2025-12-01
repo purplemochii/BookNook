@@ -1,15 +1,10 @@
 <?php
+session_start();
 require 'db_connect.php';
 
 header('Content-Type: application/json');
 
 $input = json_decode(file_get_contents("php://input"), true);
-
-if (!isset($input['book_id'])) {
-    http_response_code(400);
-    echo json_encode(['error' => 'No book_id provided']);
-    exit;
-}
 
 
 $user_id = $_SESSION['user_id']; 

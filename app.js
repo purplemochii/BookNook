@@ -305,7 +305,7 @@ function setupPayment() {
         document.getElementById("total").textContent = "$" + (book.price * 1.10).toFixed(2);
 
         document.getElementById("completePurchase").onclick = async () => {
-            const response = await fetch('/BookNook/payment.php', {
+            const response = await fetch('payment.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ book_id }),

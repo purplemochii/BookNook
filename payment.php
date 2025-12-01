@@ -3,7 +3,7 @@ include 'db_connect.php';
 
 $input = json_decode(file_get_contents("php://input"), true);
 $book_id = intval($input['book_id'] ?? 0);
-$user_id = 1; // Hardcoded for testing - replace with $_SESSION['user_id'] when login is implemented
+$user_id = $_SESSION['user_id']; // Hardcoded for testing - replace with $_SESSION['user_id'] when login is implemented
 
 $response = ["success" => false];
 

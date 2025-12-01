@@ -10,7 +10,7 @@ $sql = "SELECT b.book_id, b.title, b.img, g.genre_name,
         LEFT JOIN genres g ON b.genre_id = g.genre_id
         LEFT JOIN book_authors ba ON b.book_id = ba.book_id
         LEFT JOIN authors a ON ba.author_id = a.author_id
-        WHERE ul.user_id = ? AND ul.book_status = 'readlist'
+        WHERE ul.user_id = ? AND ul.book_status = 'owned'
         GROUP BY b.book_id";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);

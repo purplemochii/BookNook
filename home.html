@@ -50,24 +50,12 @@
   <script src="app.js"></script>
   <script>
     // small home render
-    document.addEventListener('DOMContentLoaded', ()=> {
-      const featured = document.getElementById('homeGrid');
-      const picks = [BOOKS[0], BOOKS[4], BOOKS[7], BOOKS[9]];
-      picks.forEach(b=>{
-        featured.appendChild(createCard(b, {
-          label:'Add to Readlist',
-          onClick: (bk)=>{
-            storage.pushUnique('readlist', bk.id);
-            alert(`Added ${bk.title}`)
-          }
-        }))
-      })
-    });
-
-    // toggle compressed menu
-    document.getElementById('compressedMenu').addEventListener('click', ()=>{
-      document.getElementById('navLinks').classList.toggle('show');
-    });
+    // In home.html script:
+async function loadFeatured() {
+    const response = await fetch('featured.php');
+    const featuredBooks = await response.json();
+    // ... render books, do your thing
+}
   </script>
 </body>
 </html>

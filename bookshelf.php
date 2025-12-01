@@ -19,8 +19,16 @@ $result = $stmt->get_result();
 
 $books = [];
 while ($row = $result->fetch_assoc()) {
-    $row['img'] = $row['img'] ?? 'default-cover.jpg';
-    $books[] = $row;
+    $books[] = [
+        'book_id' => (int)$row['book_id'],
+        'title' => $row['title'],
+        'authors' => $row['authors'], 
+        'genre_name' => $row['genre_name'],
+        'year' => (int)$row['year'],
+        'price' => (float)$row['price'],
+        'blurb' => $row['blurb'],
+        'img' => $row['img'] ?? 'default-cover.jpg',
+    ]
 }
 
 header('Content-Type: application/json');

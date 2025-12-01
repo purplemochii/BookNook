@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Browse - The Book Nook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="browse" data-page="browse">
+    <header class="nav-bar">
+        <div class="nav-bar-content">
+            <div class="brand">
+                <a href="home.html">THE BOOK NOOK</a>
+            </div>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="home.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="readlist.html">Readlist</a>
+                <a href="bookshelf.html">Bookshelf</a>
+                <div class="profile-dot"></div>
+            </nav>
+            
+            <div class="compressed-menu" id="compressedMenu">
+                ☰
+            </div>
+        </div>
+    </header>
+
+  <main class="container">
+    <section class="page-title-section">
+      <h1 style="text-align:left; font-size:30px;font-weight:400;font-family: 'Inter', sans-serif, medium;letter-spacing: 0.2px; padding-top: 20px;">Browse Books</h1>
+      <p class="subtitle" style="text-align:left;color:#000000b0; padding-bottom: 20px;">Discover your next great read from our collection</p>
+    </section>
+
+    <section class="container">
+      <div class="search-wrap">
+        <div class="search-input">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15.5 14h-.79l-.28-.27A6.471..." fill="#49454F"/></svg>
+          <input id="searchInput" placeholder="Search by title or author" />
+        </div>
+
+        <div class="filters">
+          <select id="genreFilter" class="select">
+            <option value="">All genres</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Non-Fiction">Non-Fiction</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Romance">Romance</option>
+            <option value="Science Fiction">Science Fiction</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Horror">Horror</option>
+          </select>
+          <select id="authorFilter" class="select">
+            <option value="">All authors</option>
+            <option value="Maren Solace">Maren Solace</option>
+            <option value="Idris K. Lowell">Idris K. Lowell</option>
+            <option value="Elara Finch">Elara Finch</option>
+            <option value="Tobias Wren">Tobias Wren</option>
+            <option value="Samira Delacourt">Samira Delacourt</option>
+            <option value="Dmitri Osin">Dmitri Osin</option>
+            <option value="Rowan Hale">Rowan Hale</option>
+            <option value="Kiara Mendoza">Kiara Mendoza</option>
+            <option value="Cassian Roe">Cassian Roe</option>
+            <option value="Jae-Min Park">Jae-Min Park</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="booksGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

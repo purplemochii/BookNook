@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bookshelf - The Book Nook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="bookshelf" data-page="bookshelf">
+    <header class="nav-bar">
+        <div class="nav-bar-content">
+            <div class="brand">
+                <a href="home.html">THE BOOK NOOK</a>
+            </div>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="home.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="readlist.html">Readlist</a>
+                <a href="bookshelf.html">Bookshelf</a>
+                <div class="profile-dot"></div>
+            </nav>
+            
+            <div class="compressed-menu" id="compressedMenu">
+                ☰
+            </div>
+        </div>
+    </header>
+
+  <main class="container">
+    <section class="page-header">
+        <h1 style="font-size:30px;font-weight:400;font-family: 'Inter', sans-serif, medium;letter-spacing: 0.2px; padding-top: 20px;">Bookshelf</h1>
+        <p id="book-count" class="kv" style="margin-top:8px; color:#000000b0; padding-bottom: 20px; font-size: 15px;">0 books total</p>
+    </section>
+
+    <section>
+      <div id="booksGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

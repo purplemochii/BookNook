@@ -17,6 +17,10 @@
         $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
 
         if ($conn -> query($sql) === TRUE){
+            // login the user after creating account
+            $_new_user_id = $conn->insert_id;
+            $_SESSION['user_id'] = $_new_user_id;
+            $_SESSION['username'] = $username;
             header("Location: home.html");
             exit();
         } else {

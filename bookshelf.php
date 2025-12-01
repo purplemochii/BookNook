@@ -1,17 +1,16 @@
 <?php
-session_start();
 include 'db_connect.php';
 
-$user_id = $_SESSION['user_id'] ?? 0;
+$user_id = $_SESSION['user_id']; 
 
-$sql = "SELECT b.book_id, b.title, g.genre_name, b.img,
+$sql = "SELECT b.book_id, b.title, b.img, g.genre_name,
                GROUP_CONCAT(a.author_name SEPARATOR ', ') AS authors
         FROM user_library ul
         JOIN books b ON ul.book_id = b.book_id
         LEFT JOIN genres g ON b.genre_id = g.genre_id
         LEFT JOIN book_authors ba ON b.book_id = ba.book_id
         LEFT JOIN authors a ON ba.author_id = a.author_id
-        WHERE ul.user_id = ? AND ul.book_status = 'owned'
+        WHERE ul.user_id = ? AND ul.book_status = 'readlist'
         GROUP BY b.book_id";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
@@ -20,13 +19,8 @@ $result = $stmt->get_result();
 
 $books = [];
 while ($row = $result->fetch_assoc()) {
-    $books[] = [
-        'book_id' => (int)$row['book_id'],
-        'title' => $row['title'],
-        'authors' => $row['authors'],
-        'genre_name' => $row['genre_name'],
-        'img' => $row['img'] ? $row['img'] : 'images/default-cover.jpg'
-    ];
+    $row['img'] = $row['img'] ?? 'default-cover.jpg';
+    $books[] = $row;
 }
 
 header('Content-Type: application/json');

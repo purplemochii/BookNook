@@ -320,6 +320,21 @@ ALTER TABLE `user_library`
   ADD CONSTRAINT `library_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
+-- create image column in books table
+ALTER TABLE `books` ADD `img` VARCHAR(255) NOT NULL DEFAULT 'images/default-cover.jpg';
+
+-- add images to books table
+UPDATE `books` SET `img` = 'images/book1.jpg' WHERE `book_id` = 1;
+UPDATE `books` SET `img` = 'images/book2.jpg' WHERE `book_id` = 2;
+UPDATE `books` SET `img` = 'images/book3.jpg' WHERE `book_id` = 3;
+UPDATE `books` SET `img` = 'images/book4.jpg' WHERE `book_id` = 4;
+UPDATE `books` SET `img` = 'images/book5.jpg' WHERE `book_id` = 5;
+UPDATE `books` SET `img` = 'images/book6.jpg' WHERE `book_id` = 6;
+UPDATE `books` SET `img` = 'images/book7.jpg' WHERE `book_id` = 7;
+UPDATE `books` SET `img` = 'images/book8.jpg' WHERE `book_id` = 8;
+UPDATE `books` SET `img` = 'images/book9.jpg' WHERE `book_id` = 9;
+UPDATE `books` SET `img` = 'images/book10.jpg' WHERE `book_id` = 10;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

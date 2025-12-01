@@ -1,4 +1,5 @@
 <?php
+    session_start();
     // XAMPP's default account
     $host = "localhost";
     $user = "root";
@@ -20,4 +21,6 @@
     if($conn->connect_errno > 0){
         die("Unable to connect to DBMS and/or DB.<br/>");
     }
+
+    //$conn->close();
 ?>

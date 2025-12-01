@@ -40,7 +40,7 @@ function setupBrowse() {
     let books = [];
 
     async function loadBooks() {
-        const response = await fetch('/BookNook/browse.php');
+        const response = await fetch('browse.php');
         books = await response.json();
         applyFilters();
     }
@@ -68,7 +68,7 @@ function setupBrowse() {
 
         // add-to-readlist button
         el.querySelector(".action").onclick = async () => {
-            await fetch('/BookNook/add-to-readlist.php', {
+            await fetch('add-to-readlist.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ book_id: book.book_id }),
@@ -114,7 +114,7 @@ function setupReadlist() {
     const grid = document.getElementById('booksGrid');
 
     async function loadReadlist() {
-        const response = await fetch('/BookNook/readlist.php');
+        const response = await fetch('readlist.php');
         readlist = await response.json();
         render();
     }
@@ -158,7 +158,7 @@ function setupBookshelf() {
     const grid = document.getElementById('booksGrid');
 
     async function loadBookshelf() {
-        const response = await fetch('/BookNook/bookshelf.php');
+        const response = await fetch('bookshelf.php');
         bookshelf = await response.json();
         render();
     }
@@ -199,13 +199,13 @@ function setupPayment() {
     const book_id = params.get('book_id');
 
     async function loadBook() {
-        const response = await fetch(`/BookNook/details.php?id=${book_id}`);
+        const response = await fetch(`details.php?id=${book_id}`);
         const book = await response.json();
         fillUI(book);
     }
 
     function fillUI(book) {
-        document.getElementById("payCover").src = "${book.img}";
+        document.getElementById("payCover").src = book.img;
         document.getElementById("payTitle").textContent = book.title;
         document.getElementById("payAuthor").textContent = book.authors;
         document.getElementById("payGenre").textContent = book.genre_name;

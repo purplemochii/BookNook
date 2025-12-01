@@ -242,22 +242,55 @@ function setupLogin() {
         loginForm.classList.remove("active");
     }
 
-    const loginSubmit = document.getElementById("auth-submit-login");
+    const loginSubmit = document.querySelector(".auth-submit-login");
     if (loginSubmit) {
-        //pretend the login details are valid lol
-        loginSubmit.onclick = (e) => {
+        //pretend the login details are valid lol - not anymore.
+        loginSubmit.onclick = async (e) => {
             e.preventDefault();
-            localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = 'home.html';
+            
+            const email = loginForm.querySelector("input[type='email']").value;
+            const password = loginForm.querySelector("input[type='password']").value;
+
+            const result = await fetch("login.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+            
+            const data = await result.json();
+            if (data.success) {
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'home.html';
+            } else {
+                alert(data.message || "Invalid details");
+            }
         };
     }
 
-    const signupSubmit = document.getElementById("auth-submit-signup");
+    const signupSubmit = document.querySelector(".auth-submit-signup");
     if (signupSubmit) {
-        signupSubmit.onclick = (e) => {
+        signupSubmit.onclick = async(e) => {
             e.preventDefault();
-            localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = 'home.html';
+            
+            const fields = signupForm.querySelectorAll("input");
+            const email = fields[0].value;
+            const password = fields[1].value;
+
+            const result = await fetch("signup.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+            
+            const data = await result.json();
+            if (data.success) {
+                alert(data.message || "Account created!");
+                loginTab.click();
+            }
         };
     }
 }

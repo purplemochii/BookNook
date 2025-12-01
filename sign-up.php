@@ -16,7 +16,6 @@
         $sql = "INSERT INTO users (email, password) VALUES ('$email', '$password')";
 
         if ($conn -> query($sql) === TRUE){
-            echo "Account created successfully";
             header("Location: home.html");
             exit();
         } else {

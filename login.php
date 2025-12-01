@@ -17,6 +17,7 @@
             $_SESSION["user_id"] = $row["user_id"];
             $_SESSION["username"] = $row["username"];
 
+            //go to home page
             echo "Login successful";
             header("Location: home.html")
             exit();

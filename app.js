@@ -3,6 +3,13 @@
 
 //fetched books variable
 let BOOKS = [];
+
+async function fetchBooks(){
+    if(BOOKS.length == 0){
+        const response = await fetch('browse.php');
+        BOOKS = await response.json();
+    }
+}
   
   // saving all to local storage for now 
 const storage = {
@@ -81,19 +88,12 @@ function setupIndex(){
 }
   
 /*browse page*/
-function setupBrowse(){
+async function setupBrowse(){
     const grid = document.getElementById('booksGrid');
     const search = document.getElementById('searchInput');
     const genre = document.getElementById('genreFilter');
     const author = document.getElementById('authorFilter');
-
-    // fetch book data using php
-    async function fetchBooks(){
-        const response = await fetch('browse.php');
-        BOOKS = await response.json();
-        applyFilters();
-    }
-  
+    
     function render(filtered){
         grid.innerHTML = '';
         if(filtered.length===0){
@@ -121,19 +121,18 @@ function setupBrowse(){
         if(a) res = res.filter(b=> b.author.toLowerCase().includes(a.toLowerCase()));
         render(res);
     }
-  
-    // initial render
-    applyFilters();
     // listeners
     if(search) search.addEventListener('input', applyFilters);
     if(genre) genre.addEventListener('change', applyFilters);
     if(author) author.addEventListener('change', applyFilters);
 
-    fetchBooks();
+    await fetchBooks();
+    applyFilters();
 }
   
 /*readlist page*/
-function setupReadlist(){
+async function setupReadlist(){
+    await fetchBooks();
     const grid = document.getElementById('booksGrid');
     const countEl = document.getElementById('book-count');
   
@@ -163,7 +162,8 @@ function setupReadlist(){
 }
   
 /*bookshelf page*/
-function setupBookshelf(){
+async function setupBookshelf(){
+    await fetchBooks();
     const grid = document.getElementById('bookshelf-container') || document.getElementById('booksGrid');
     const countEl = document.getElementById('book-count');
   

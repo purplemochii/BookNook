@@ -1,3 +1,4 @@
+//delete later
 <?php
     // XAMPP's default account
     $host = "localhost";

@@ -8,26 +8,25 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body id="index" data-page="index">
-    <header class="nav-bar">
-        <div class="nav-bar-content">
-            <div class="brand">
-                <a href="home.html">THE BOOK NOOK</a>
-            </div>
+  <header class="nav-bar">
+    <div class="nav-bar-content">
+      <div class="brand">
+        <a href="home.html">THE BOOK NOOK</a>
+      </div>
 
-            <nav class="nav-links" id="navLinks">
-                <a href="home.html">Home</a>
-                <a href="browse.html">Browse</a>
-                <a href="readlist.html">Readlist</a>
-                <a href="bookshelf.html">Bookshelf</a>
-                <div class="profile-dot"></div>
-            </nav>
-            
-            <div class="compressed-menu" id="compressedMenu">
-                ☰
-            </div>
-        </div>
-    </header>
-
+      <nav class="nav-links" id="navLinks">
+        <a href="home.html">Home</a>
+        <a href="browse.html">Browse</a>
+        <a href="readlist.html">Readlist</a>
+        <a href="bookshelf.html">Bookshelf</a>
+        <div class="profile-dot"></div>
+      </nav>
+      
+      <div class="compressed-menu" id="compressedMenu">
+        ☰
+      </div>
+    </div>
+  </header>
 
   <main class="container">
     <section class="hero">
@@ -55,10 +54,17 @@
       const featured = document.getElementById('homeGrid');
       const picks = [BOOKS[0], BOOKS[4], BOOKS[7], BOOKS[9]];
       picks.forEach(b=>{
-        featured.appendChild(createCard(b, { label:'Add to Readlist', onClick: (bk)=>{ storage.pushUnique('readlist', bk.id); alert(`Added ${bk.title}`) } }))
+        featured.appendChild(createCard(b, {
+          label:'Add to Readlist',
+          onClick: (bk)=>{
+            storage.pushUnique('readlist', bk.id);
+            alert(`Added ${bk.title}`)
+          }
+        }))
       })
     });
 
+    // toggle compressed menu
     document.getElementById('compressedMenu').addEventListener('click', ()=>{
       document.getElementById('navLinks').classList.toggle('show');
     });

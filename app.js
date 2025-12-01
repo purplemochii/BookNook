@@ -100,15 +100,22 @@ async function setupBrowse(){
             grid.innerHTML = '<div class="empty">No books found</div>'; return;
         }
         filtered.forEach(b=>{
-        const card = createCard(b, {
-            label: 'Add to Readlist',
-            onClick: (book)=>{
-                storage.pushUnique('readlist', book.id);
-                alert(`Added "${book.title}" to your Readlist`);
+            let cardOptions = {}; 
+            if(b.status === "owned"){
+                cardOptions.label = "Already owned";
+                cardOptions.onClick = null;
+            }else if(b.status === "readlist"){
+                cardOptions.label = "Already on Readlist";
+                cardOptions.onClick = null;
+            }else{
+                cardOptions.label = "Add to Readlist";
+                cardOptions.onClick = (book)=>{
+                    addToReadList(book.id, book.title);
+                };
             }
+            const card = createCard(b, cardOptions);
+            grid.appendChild(card);
         });
-        grid.appendChild(card);
-      });
     }
   
     function applyFilters(){
@@ -136,29 +143,70 @@ async function setupReadlist(){
     const grid = document.getElementById('booksGrid');
     const countEl = document.getElementById('book-count');
   
-    function render(){
-      grid.innerHTML = '';
-      const ids = storage.get('readlist');
-      if(!ids.length){
-            grid.innerHTML = '<div class="empty">Your readlist is empty — find books on Browse.</div>';
+    async function render(){
+        grid.innerHTML = '';
+        const response = await fetch('readlist.php');
+        const books = await response.json(); 
+
+        if(!books.length){
+            grid.innerHTML = '<div class="empty">Your readlist is empty — add books from Browse.</div>';
             if(countEl) countEl.textContent = '0 books total';
             return;
-      }
-      const books = ids.map(id=> BOOKS.find(b=>b.id===id)).filter(Boolean);
-      books.forEach(b=>{
-        const card = createCard(b, {
-            label: 'Buy Now',
-            onClick: (book)=>{
-                localStorage.setItem('selectedBook', JSON.stringify(book));
-                localStorage.setItem("fromReadList", "true");
-                window.location.href = 'payment.html';                
-            }
+        }
+        books.forEach(b=>{
+            const card = createCard(b, {
+                label: 'Buy Now',
+                onClick: (book)=>{
+                    localStorage.setItem('selectedBook', JSON.stringify(book));
+                    window.location.href = 'payment.html';                
+                }
+            });
+            grid.appendChild(card);
         });
-        grid.appendChild(card);
-      });
-      if(countEl) countEl.textContent = `${books.length} books total`;
+        if(countEl) countEl.textContent = `${books.length} books total`;
     }
     render();
+}
+
+/* handles adding a book to the readlist via db insert, called from browse page buttons*/
+async function addToReadList(bookID, bookTitle){
+    const formData = new URLSearchParams();
+    formData.append('book_id', bookID);
+    formData.append('action', 'add'); // signal to readlist.php that we are adding to the readlist
+
+    const response = await fetch('readlist.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const result = await response.json();
+    if(result.success){
+        alert(`"${bookTitle}" added to Readlist`);
+    }else{
+        alert('Failed to add book to Readlist: ' + result.message);
+    }
+}
+
+/* handles removing a book from the readlist via db delete, called from readlist page buttons
+as this function was intended for a "remove from readlist" button that wasn't implemented, it's redundant for now.
+currently, payment.php automatically removes purchased books from the readlist.*/
+async function removeFromReadList(bookID, bookTitle, renderFunc){
+    const formData = new URLSearchParams();
+    formData.append('book_id', bookID);
+    formData.append('action', 'remove'); // signal to readlist.php that we are removing from the readlist
+
+    const response = await fetch('readlist.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const result = await response.json();
+    if(result.success){
+        await renderFunc(); // render books again
+        alert(`"${bookTitle}" removed from Readlist`);
+    }else{
+        alert('Failed to remove book from Readlist: ' + result.message);
+    }
 }
   
 /*bookshelf page*/

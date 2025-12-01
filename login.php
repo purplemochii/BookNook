@@ -20,7 +20,6 @@
             //go to home page
             echo "Login successful";
             header("Location: home.html")
-            exit();
         } else {
             echo "Invalid email or password";
         }

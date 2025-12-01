@@ -226,9 +226,10 @@ function setupReadlist() {
                     <div class="author">${book.authors}</div>
                     <div class="meta-row">
                         <span class="badge">${book.genre_name}</span>
+                        <span class="price">$${book.price}</span>
                     </div>
                 </div>
-                <button class="action">Purchase</button>
+                <button class="action">Buy Now</button>
             `;
 
             card.querySelector(".action").onclick = () => {

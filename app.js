@@ -40,7 +40,7 @@ function setupBrowse() {
     let books = [];
 
     async function loadBooks() {
-        const response = await fetch('browse.php');
+        const response = await fetch('/BookNook/browse.php');
         books = await response.json();
         applyFilters();
     }
@@ -68,7 +68,7 @@ function setupBrowse() {
 
         // add-to-readlist button
         el.querySelector(".action").onclick = async () => {
-            await fetch('add-to-readlist.php', {
+            await fetch('/BookNook/browse.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ book_id: book.book_id }),
@@ -113,7 +113,7 @@ function setupReadlist() {
     const grid = document.getElementById('booksGrid');
 
     async function loadReadlist() {
-        const response = await fetch('readlist.php');
+        const response = await fetch('/BookNook/readlist.php');
         readlist = await response.json();
         render();
     }
@@ -157,7 +157,7 @@ function setupBookshelf() {
     const grid = document.getElementById('booksGrid');
 
     async function loadBookshelf() {
-        const response = await fetch('bookshelf.php');
+        const response = await fetch('/BookNook/bookshelf.php');
         bookshelf = await response.json();
         render();
     }
@@ -198,7 +198,7 @@ function setupPayment() {
     const book_id = params.get('book_id');
 
     async function loadBook() {
-        const response = await fetch(`details.php?id=${book_id}`);
+        const response = await fetch(`/BookNook/details.php?id=${book_id}`);
         const book = await response.json();
         fillUI(book);
     }
@@ -215,7 +215,7 @@ function setupPayment() {
         document.getElementById("total").textContent = "$" + (book.price * 1.10).toFixed(2);
 
         document.getElementById("completePurchase").onclick = async () => {
-            const response = await fetch('purchase.php', {
+            const response = await fetch('/BookNook/payment.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ book_id }),

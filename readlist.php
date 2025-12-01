@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     
 // }
 
-$sql = "SELECT b.book_id, b.title, b.year, b.price, b.blurb, g.genre_name,
+$sql = "SELECT b.book_id, b.title, b.year, b.price, b.blurb, g.genre_name, b.img,
             GROUP_CONCAT(a.author_name SEPARATOR ', ') AS author -- get all authors
             FROM user_library ul
             JOIN Books b ON ul.book_id = b.book_id
@@ -95,7 +95,7 @@ $sql = "SELECT b.book_id, b.title, b.year, b.price, b.blurb, g.genre_name,
             LEFT JOIN Book_Authors ba ON b.book_id = ba.book_id
             LEFT JOIN Authors a ON ba.author_id = a.author_id
             WHERE ul.user_id = $user_id AND ul.book_status = 'readlist'
-            GROUP BY b.book_id, b.title, b.year, b.price, b.blurb, g.genre_name";
+            GROUP BY b.book_id, b.title, b.year, b.price, b.blurb, g.genre_name, b.img";
 
 $result = $conn->query($sql);
 
@@ -109,8 +109,8 @@ while ($row = $result->fetch_assoc()) {
         'year' => (int)$row['year'],
         'price' => (float)$row['price'],
         'blurb' => $row['blurb'],
-        // placeholder image
-        'img' => 'https://d827xgdhgqbnd.cloudfront.net/wp-content/uploads/2016/04/09121712/book-cover-placeholder.png'
+        // uses placeholder image if none provided
+        'img' => $row['img'] ?? 'https://d827xgdhgqbnd.cloudfront.net/wp-content/uploads/2016/04/09121712/book-cover-placeholder.png'
     ];
 }
 

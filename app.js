@@ -180,11 +180,7 @@ async function addToReadList(bookID, bookTitle){
     });
 
     const result = await response.json();
-    if(result.success){
-        alert(`"${bookTitle}" added to Readlist`);
-    }else{
-        alert('Failed to add book to Readlist: ' + result.message);
-    }
+    alert(result.message);
 }
 
 /* handles removing a book from the readlist via db delete, called from readlist page buttons
@@ -202,11 +198,9 @@ async function removeFromReadList(bookID, bookTitle, renderFunc){
 
     const result = await response.json();
     if(result.success){
-        await renderFunc(); // render books again
-        alert(`"${bookTitle}" removed from Readlist`);
-    }else{
-        alert('Failed to remove book from Readlist: ' + result.message);
+        await renderFunc(); // render books again if removal successful
     }
+    alert(result.message);
 }
   
 /*bookshelf page*/

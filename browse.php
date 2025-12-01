@@ -17,10 +17,10 @@ $books = [];
 while ($row = $result->fetch_assoc()) {
     // mapping the book structure to how its originally laid out on app.js
     $books[] = [
-        'id' => (int)$row['book_id'],
+        'book_id' => (int)$row['book_id'],
         'title' => $row['title'],
-        'author' => $row['authors'], 
-        'genre' => $row['genre_name'],
+        'authors' => $row['authors'], 
+        'genre_name' => $row['genre_name'],
         'year' => (int)$row['year'],
         'price' => (float)$row['price'],
         'blurb' => $row['blurb'],

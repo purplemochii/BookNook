@@ -2,62 +2,8 @@
 // pls work… pls 🧎🏾‍♀️
 // (i avoided frameworks like a champ but at what cost)
 
-//fetched books variable
-let BOOKS = [];
-
-async function fetchBooks(){
-    if(BOOKS.length == 0){
-        const response = await fetch('browse.php');
-        BOOKS = await response.json();
-    }
-}
-  
-  // saving all to local storage for now 
-const storage = {
-    get(k){ try{ return JSON.parse(localStorage.getItem(k)) || []; }catch{ return [] } },
-    set(k,v){ localStorage.setItem(k, JSON.stringify(v)) },
-    pushUnique(k, id){
-      const arr = storage.get(k);
-      if(!arr.includes(id)) { arr.push(id); storage.set(k,arr) }
-    },
-    remove(k,id){
-      const arr = storage.get(k).filter(i=>i!==id);
-      storage.set(k,arr);
-    }
-}
-  // render helpers
-function createCard(book, opts={}){
-    const el = document.createElement('article');
-    el.className = 'card';
-    el.dataset.id = book.id;
-    el.innerHTML = `
-      <img class="card__cover" src="${book.img}" alt="${escapeHtml(book.title)} cover" onerror="this.style.background='#ddd'; this.src=''">
-      <div class="card__body">
-        <div>
-            <div class="title">${escapeHtml(book.title)}</div>
-            <div class="author">${escapeHtml(book.author)}</div>
-            <div class="meta-row">
-                <span class="badge">${escapeHtml(book.genre)}</span>
-                <span class="kv">${book.year}</span>
-            </div>
-        </div>
-        <button class="action">${escapeHtml(opts.label || 'Add')}</button>
-      </div>
-    `;
-    // action handler
-    const btn = el.querySelector('.action');
-    btn.addEventListener('click', ()=>{
-        if(opts.onClick) opts.onClick(book);
-    });
-    return el;
-}
-  
-function escapeHtml(s){ 
-    return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') 
-}
-  
-  // page-specific setups
-document.addEventListener('DOMContentLoaded', ()=>{
+// Run setup depending on which page we’re on
+document.addEventListener('DOMContentLoaded', () => {
     const page = document.body.dataset.page || document.body.id || '';
     const path = window.location.pathname.split('/').pop();
 
@@ -83,81 +29,76 @@ function setupIndex() {
     // literally nothing here… like my energy at 3AM 😭
     // *tumbleweed*
 }
-  
-/*browse page*/
-async function setupBrowse(){
+
+/* BROWSE PAGE */
+function setupBrowse() {
     const grid = document.getElementById('booksGrid');
     const search = document.getElementById('searchInput');
     const genre = document.getElementById('genreFilter');
     const author = document.getElementById('authorFilter');
-    
-    function render(filtered){
-        grid.innerHTML = '';
-        if(filtered.length===0){
-            grid.innerHTML = '<div class="empty">No books found</div>'; return;
-        }
-        filtered.forEach(b=>{
-        const card = createCard(b, {
-            label: 'Add to Readlist',
-            onClick: (book)=>{
-                storage.pushUnique('readlist', book.id);
-                alert(`Added "${book.title}" to your Readlist`);
-            }
-        });
-        grid.appendChild(card);
-      });
-    }
-  
-    function applyFilters(){
-        const q = (search?.value||'').trim().toLowerCase();
-        const g = (genre?.value||'').trim();
-        const a = (author?.value||'').trim();
-        let res = BOOKS.slice();
-        if(q) res = res.filter(b=> (b.title+b.author).toLowerCase().includes(q));
-        if(g) res = res.filter(b=> b.genre.toLowerCase().includes(g.toLowerCase()));
-        if(a) res = res.filter(b=> b.author.toLowerCase().includes(a.toLowerCase()));
-        render(res);
-    }
-    // listeners
-    if(search) search.addEventListener('input', applyFilters);
-    if(genre) genre.addEventListener('change', applyFilters);
-    if(author) author.addEventListener('change', applyFilters);
 
-    await fetchBooks();
-    applyFilters();
-}
-  
-/*readlist page*/
-async function setupReadlist(){
-    await fetchBooks();
-    const grid = document.getElementById('booksGrid');
-    const countEl = document.getElementById('book-count');
-  
-    function render(){
-      grid.innerHTML = '';
-      const ids = storage.get('readlist');
-      if(!ids.length){
-            grid.innerHTML = '<div class="empty">Your readlist is empty — find books on Browse.</div>';
-            if(countEl) countEl.textContent = '0 books total';
+    let books = [];
+
+    async function loadBooks() {
+        const response = await fetch('browse.php');
+        books = await response.json();
+        applyFilters();
+    }
+
+    // create book card
+    function createBrowseCard(book) {
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.dataset.id = book.book_id;
+
+        el.innerHTML = `
+            <img class="card__cover" src="images/book${book.book_id}.jpg" alt="">
+            <div class="card__body">
+                <div>
+                    <div class="title">${book.title}</div>
+                    <div class="author">${book.authors}</div>
+                    <div class="meta-row">
+                        <span class="badge">${book.genre_name}</span>
+                        <span class="price">$${book.price}</span>
+                    </div>
+                </div>
+                <button class="action">Add to Readlist</button>
+            </div>
+        `;
+
+        // add-to-readlist button
+        el.querySelector(".action").onclick = async () => {
+            await fetch('add-to-readlist.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ book_id: book.book_id }),
+            });
+            alert(`Added "${book.title}" to your Readlist!`);
+        };
+
+        return el;
+    }
+
+    function render(list) {
+        grid.innerHTML = '';
+        if (list.length === 0) {
+            grid.innerHTML = '<div class="empty">No books found</div>';
             return;
         }
         list.forEach(book => grid.appendChild(createBrowseCard(book)));
     }
-    render();
-}
-  
-/*bookshelf page*/
-async function setupBookshelf(){
-    await fetchBooks();
-    const grid = document.getElementById('bookshelf-container') || document.getElementById('booksGrid');
-    const countEl = document.getElementById('book-count');
-  
-    grid.innerHTML = '';
-    const ids = storage.get('bookshelf');
-    if(!ids.length){
-        grid.innerHTML = '<div class="empty">Your bookshelf is empty — add books from Readlist.</div>';
-        if(countEl) countEl.textContent = '0 books total';
-        return;
+
+    function applyFilters() {
+        let filtered = [...books];
+        const q = (search.value || '').toLowerCase();
+        const g = genre.value.toLowerCase();
+        const a = author.value.toLowerCase();
+
+        if (q) filtered = filtered.filter(b => (b.title + b.authors).toLowerCase().includes(q));
+        if (g) filtered = filtered.filter(b => b.genre_name.toLowerCase().includes(g));
+        if (a) filtered = filtered.filter(b => b.authors.toLowerCase().includes(a));
+
+        render(filtered);
     }
 
     search.addEventListener('input', applyFilters);
@@ -180,7 +121,7 @@ function setupReadlist() {
     function render() {
         grid.innerHTML = '';
         if (readlist.length === 0) {
-            grid.innerHTML = '<div class="empty">Your readlist is empty — go browse — be an intellectual </div>';
+            grid.innerHTML = '<div class="empty">Your readlist is empty — go browse — be an intellectual</div>';
             return;
         }
 
@@ -240,7 +181,7 @@ function setupBookshelf() {
                     <div class="meta-row">
                         <span class="badge">${book.genre_name}</span>
                     </div>
-                    <button class="action owned">Owned ✔️</button>
+                    <button class="action owned">Owned</button>
                 </div>
             `;
 
